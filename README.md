@@ -1,73 +1,83 @@
-# React + TypeScript + Vite
+# Lucy Dash
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Dashboard de administración para [Lucy](https://github.com/Hyromy/Lucy)
 
-Currently, two official plugins are available:
+![React](https://img.shields.io/badge/React-19.2.0-61DAFB?logo=react)
+![Vite](https://img.shields.io/badge/Vite-7.2.4-646CFF?logo=vite)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-3178C6?logo=typescript)
+![Docker](https://img.shields.io/badge/Docker-Container-blue?logo=docker)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Índice
+- [Lucy Dash](#lucy-dash)
+  - [Índice](#índice)
+  - [Estructura del proyecto](#estructura-del-proyecto)
+  - [Variables de entrono](#variables-de-entrono)
+  - [Despliegue](#despliegue)
+    - [Local](#local)
+    - [Docker](#docker)
 
-## React Compiler
+## Estructura del proyecto
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+Se posee una estructura típica de un proyecto React + TypeScript + Vite
 
-## Expanding the ESLint configuration
+```sh
+public/            # contenido público
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+src/               # proyecto
+├── assets/        # recursos estáticos
+├── components/    # componentes
+├── context/       # contextos
+├── hooks/         # hooks
+├── pages/         # vistas
+├── services/      # servicios
+│
+├── App.tsx        # aplicación
+└── main.tsx       # punto de entrada
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+package.json       # dependencias
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Variables de entrono
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Es necesario configurar `VITE_DISCORD_CLIENT_ID` con el id de la aplicación de discord que se vaya a usar para el dashboard.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Obten tu id de cliente en [Discord developer portal](https://discord.com/developers/applications) en la sección OAuth2.
+
+Adicionalmente es necesario que el backend que se vaya a emplear tenga configurado el __Client Secret__ para el correcto funcionamiento del dashboard.
+
+El resto de variables de entorno tienen valores por defecto.
+
+| Clave | Valor por defecto | Descripción |
+| - | - | - |
+| `VITE_DISCORD_CLIENT_ID` | `undefined` | Id de cliente de aplicación de discord |
+| `VITE_DISCORD_REDIRECT_URI` | `"auth/callback"` | Endpoint de redirección para oauth2 |
+| `VITE_API_URL` | `"http://localhost:8000"` | Api rest para intercambio de tokens |
+
+## Despliegue
+
+### Local
+
+1. Dependencias
+   
+   Instala las [dependencias](./package.json).
+   ```sh
+   npm i
+   ```
+
+2. Ejecución
+   
+   Ejecuta le proyecto.
+   ```sh
+   npm run dev
+   ```
+
+---
+
+### Docker
+
+Puedes construir una imagen y contenedor con el [Dockerfile](./Dockerfile).
+```sh
+docker build -t app_image .
+
+docker run --name app_container -e 'VITE_DISCORD_CLIENT_ID=your_id_here' -p 5173:5173 app_image
 ```
