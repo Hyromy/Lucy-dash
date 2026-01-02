@@ -1,10 +1,12 @@
 import { useEffect, useRef } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { exchangeCodeForTokens, saveTokens, getAccessToken } from '../services/authService'
+import { useAuth } from '../context/Auth'
 
 export function useOAuthCallback() {
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
+  const { checkAuth } = useAuth()
   const hasExchanged = useRef(false)
 
   useEffect(() => {
@@ -29,6 +31,7 @@ export function useOAuthCallback() {
       .then(data => {
         if (data.access_token && data.refresh_token) {
           saveTokens(data.access_token, data.refresh_token)
+          checkAuth()
         }
         navigate('/')
       })
@@ -37,5 +40,5 @@ export function useOAuthCallback() {
         navigate('/')
       })
     }
-  }, [searchParams, navigate])
+  }, [searchParams, navigate, checkAuth])
 }

@@ -10,3 +10,9 @@ export default function Navbar({children}: NavbarProps) {
     </div>
   </nav>
 }
+
+export function NavbarGroup({children}: NavbarProps) {
+  return <div className="navbar-group d-flex align-items-center gap-2">
+    {children}
+  </div>
+}

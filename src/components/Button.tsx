@@ -1,5 +1,6 @@
 import type { ReactNode } from "react"
 import { useTheme } from "../context/Theme"
+import { useAuth } from "../context/Auth"
 import Icon from "./Icon"
 
 import { useUser } from "../hooks/useUser"
@@ -53,34 +54,36 @@ type LoginButtonProps = {
 export function LoginButton({
   size = 6
 }: LoginButtonProps) {
-  const { user, loading } = useUser()
+  const { isAuthenticated, isLoading, logout } = useAuth()
+  const { user } = useUser()
   
   const handleLogin = () => {
     const clientId = import.meta.env.VITE_DISCORD_CLIENT_ID
     const redirectUri = window.location.origin + '/' + (import.meta.env.VITE_DISCORD_REDIRECT_URI || 'auth/callback')
-    const scope = 'identify email'
+    const scope = 'identify email guilds'
     
     const authUrl = `https://discord.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=${encodeURIComponent(scope)}`
     
     window.location.href = authUrl
   }
   
-  if (loading) {
+  if (isLoading) {
     return <div className="spinner-border spinner-border-sm" role="status">
       <span className="visually-hidden">Cargando...</span>
     </div>
   }
   
-  if (user) {
+  if (isAuthenticated && user) {
     return <div className="d-flex align-items-center gap-2">
-      <img 
-        src={getUserAvatarUrl(user)} 
-        alt={getUserDisplayName(user)}
-        className="rounded-circle"
-        width={40}
-        height={40}
-      />
-      <span className="fw-bold">{getUserDisplayName(user)}</span>
+      <Button onClick={logout}>
+        <img
+          src={getUserAvatarUrl(user)} 
+          alt={getUserDisplayName(user)}
+          className="rounded-circle"
+          width={40}
+          height={40}
+        />
+      </Button>
     </div>
   }
   
