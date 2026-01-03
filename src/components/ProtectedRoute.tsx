@@ -7,7 +7,11 @@ type Props = {
   children: ReactNode
 }
 export default function ProtectedRoute({ children }: Props) {
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, isLoading } = useAuth()
+
+  if (isLoading) {
+    return null
+  }
 
   if (!isAuthenticated) {
     return <Navigate to="/" replace />

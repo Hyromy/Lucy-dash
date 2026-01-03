@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { exchangeCodeForTokens, saveTokens, getAccessToken } from '../services/authService'
 import { useAuth } from '../context/Auth'
@@ -7,7 +7,6 @@ export function useOAuthCallback() {
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
   const { checkAuth } = useAuth()
-  const hasExchanged = useRef(false)
 
   useEffect(() => {
     if (getAccessToken()) {
@@ -24,9 +23,7 @@ export function useOAuthCallback() {
       return
     }
     
-    if (code && !hasExchanged.current) {
-      hasExchanged.current = true
-      
+    if (code) {
       exchangeCodeForTokens(code)
       .then(data => {
         if (data.access_token && data.refresh_token) {

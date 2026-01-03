@@ -4,8 +4,10 @@ export type Guild = {
   id: string
   name: string
   icon : string | null
+  banner: string | null
   owner: boolean
-  permissions: string
+  permissions_new: string
+  permissions: number
   features: string[]
 }
 
@@ -43,4 +45,8 @@ export async function getGuildIconUrl(guild: Guild, size: number = 128): Promise
     return `https://cdn.discordapp.com/embed/avatars/${parseInt(guild.id) % 5}.png`
   }
   return `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png?size=${size}`
+}
+
+export function isBotInstalled(guild: Guild): boolean {
+  return guild.features?.includes('BOT_INSTALLED') || false
 }
