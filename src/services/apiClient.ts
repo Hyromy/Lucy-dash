@@ -1,7 +1,9 @@
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+import { getAccessToken } from "./authService"
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api'
 
 export async function apiRequest(endpoint: string, options: RequestInit = {}) {
-  const token = localStorage.getItem('access_token')
+  const token = getAccessToken()
   
   const config: RequestInit = {
     ...options,
@@ -12,8 +14,8 @@ export async function apiRequest(endpoint: string, options: RequestInit = {}) {
     }
   }
   
-  const response = await fetch(`${API_URL}${endpoint}`, config)
-  
+  const response = await fetch(`${API_URL}/${endpoint}`, config)
+
   if (!response.ok) {
     const error = await response.json().catch(() => ({ detail: 'Error desconocido' }))
     throw new Error(error.detail || `Error ${response.status}`)

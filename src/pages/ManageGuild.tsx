@@ -5,7 +5,7 @@ import Foot from "../layout/Foot"
 
 import { useParams } from "react-router-dom"
 
-import { useGuilds } from "../hooks/useGuilds"
+import { useGuildDetails } from "../hooks/useGuilds"
 
 function template(children : ReactNode) {
   return <>
@@ -19,19 +19,19 @@ function template(children : ReactNode) {
 
 export default function ManageGuild() {
   const { id_guild } = useParams<{ id_guild: string }>()
-  const { guilds, isLoading, error } = useGuilds()
+  const { guild, isLoading, error } = useGuildDetails(id_guild)
 
-  const guild = guilds.find(g => g.id == id_guild)
+  const {  } = guild
 
   if (isLoading) return template(<p>Loading...</p>)
   if (error) return template(<p>{error}</p>)
   if (!guild) return template(<p>Guild not found</p>)
 
-  console.log(guild)
-
   return template(
-    <div>
-      hola
-    </div>
+    Object.keys(guild.guild).map(key => (
+      <p key={key}>
+        <strong>{key}:</strong> {JSON.stringify((guild.guild as any)[key])}
+      </p>
+    ))
   )
 }
