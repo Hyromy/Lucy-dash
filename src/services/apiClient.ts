@@ -1,6 +1,6 @@
 import { getAccessToken } from "./authService"
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api'
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 
 export async function apiRequest(endpoint: string, options: RequestInit = {}) {
   const token = getAccessToken()

@@ -17,7 +17,7 @@ export type GuildsResponse = {
   ready_to_install_guilds: Guild[]
 }
 export async function getUserGuilds(): Promise<GuildsResponse> {
-  return Api.get('dashboard/guild/')
+  return Api.get('api/dashboard/guild/')
 }
 
 export type GuildDetails = {
@@ -25,5 +25,5 @@ export type GuildDetails = {
   guild: Guild
 }
 export async function getGuildDetails(guildId: string): Promise<GuildDetails> {
-  return Api.get(`dashboard/guild/${guildId}/`)
+  return Api.get(`api/dashboard/guild/${guildId}/`)
 }

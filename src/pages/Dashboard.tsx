@@ -21,7 +21,7 @@ export default function Dashboard() {
 
   const installed = registered_guilds?.length > 0
   ? <section>
-      <h2>Manage</h2>
+      <h2 className="text-center">Manage</h2>
       <div className="d-flex flex-wrap gap-3 justify-content-center">
         {registered_guilds?.map((guild: Guild) => {
           return <GuildCard
@@ -36,13 +36,14 @@ export default function Dashboard() {
 
   const notInstalled = ready_to_install_guilds?.length > 0
   ? <section>
-      <h2>Install Lucy</h2>
+      <h2 className="text-center">Install Lucy</h2>
       <div className="d-flex flex-wrap gap-3 justify-content-center">
         {ready_to_install_guilds?.map((guild: Guild) => {
+          const inviteUrl = `https://discord.com/api/oauth2/authorize?client_id=1181054632743686195&permissions=8&scope=bot%20applications.commands&guild_id=${guild.id}`
           return <GuildCard
             key={guild.id}
             guild={guild}
-            onClick={() => navigate(`/dashboard/${guild.id}`)}
+            onClick={() => window.open(inviteUrl, '_blank')}
           />
         })}
       </div>
@@ -55,6 +56,7 @@ export default function Dashboard() {
       ? <p>Error loading guilds.</p>
       : <>
         {installed}
+        {installed && notInstalled ? <hr /> : null}
         {notInstalled}
       </>
 

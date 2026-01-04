@@ -1,7 +1,7 @@
 import { Api } from "./apiClient"
 
 export async function exchangeCodeForTokens(code: string) {
-  return Api.post('/auth/discord/', { code })
+  return Api.post('auth/discord/', { code })
 }
 
 export function saveTokens(accessToken: string, refreshToken: string) {
