@@ -9,15 +9,17 @@ export default function Nav() {
   const { isAuthenticated } = useAuth()
   const navigate = useNavigate()
 
-  const clickHandler = () => {
-    navigate("/dashboard")
-  }
-
   return <Navbar>
     <NavbarGroup>
-      {isAuthenticated && <Button onClick={clickHandler}>
-        Dashboard
-      </Button>}
+      <Button onClick={() => navigate("/")}>
+        Home
+      </Button>
+      {
+        isAuthenticated
+          && <Button onClick={() => navigate("/dashboard")}>
+            Dashboard
+          </Button>
+      }
     </NavbarGroup>
     <NavbarGroup>
       <LoginButton size={1} />
