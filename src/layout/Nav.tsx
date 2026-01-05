@@ -21,8 +21,8 @@ export default function Nav() {
           </Button>
       }
     </NavbarGroup>
-    <NavbarGroup>
-      <LoginButton size={1} />
+    <NavbarGroup gap={0}>
+      <LoginButton size={2} />
       <ThemeButton size={2} />
     </NavbarGroup>
   </Navbar>

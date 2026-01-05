@@ -27,7 +27,7 @@ function template(
             onClick={() => setView("overview")}
             style={{ 
               cursor: 'pointer',
-              fontWeight: activeView === "overview" ? 'bold' : 'normal'
+              fontWeight: activeView == "overview" ? 'bold' : 'normal'
             }}
           >
             Overview
@@ -36,7 +36,7 @@ function template(
             onClick={() => setView("config")}
             style={{ 
               cursor: 'pointer',
-              fontWeight: activeView === "config" ? 'bold' : 'normal'
+              fontWeight: activeView == "config" ? 'bold' : 'normal'
             }}
           >
             Config
@@ -94,6 +94,7 @@ export default function ManageGuild() {
 
 function thisView(guild: any) {
   console.log(guild)
+  
   return Object.keys(guild).map((key) => (
     <div key={key} className="mb-2">
       <strong>{key}:</strong> {String((guild as any)[key])}

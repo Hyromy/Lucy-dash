@@ -6,28 +6,24 @@ import Icon from "./Icon"
 import { useUser } from "../hooks/useUser"
 import { getUserAvatarUrl, getUserDisplayName } from "../services/userService"
 
+import Dropdown, { DropdownItem } from "./Dropdown"
+
 type ButtonProps = {
-  children?: ReactNode,
+  children: ReactNode,
   variant?: string,
-  rounded?: boolean,
   onClick?: () => void,
 }
 export default function Button({
   children,
   variant,
-  rounded = false,
   onClick
 }: ButtonProps) {
   const variantClases = variant
   ? `btn-${variant}`
   : ""
 
-  const roundedClases = rounded
-  ? "rounded-4 border-2 border-secondary p-0 px-2"
-  : ""
-
   return <button 
-    className={`btn d-flex align-items-center justify-content-center ${variantClases} ${roundedClases}`}
+    className={`btn d-flex align-items-center justify-content-center ${variantClases}`}
     onClick={onClick}>
       {children}
   </button>
@@ -74,21 +70,21 @@ export function LoginButton({
   }
   
   if (isAuthenticated && user) {
-    return <div className="d-flex align-items-center gap-2">
-      <Button onClick={logout}>
-        <img
-          src={getUserAvatarUrl(user)} 
-          alt={getUserDisplayName(user)}
-          className="rounded-circle"
-          width={40}
-          height={40}
-        />
-      </Button>
-    </div>
+    return <Dropdown align="end" options={[
+      <DropdownItem text="Logout" icon="box-arrow-left" onclick={logout} variant={"danger"}/>,
+    ]}>
+      <img
+        src={getUserAvatarUrl(user)} 
+        alt={getUserDisplayName(user)}
+        className="rounded-circle me-2"
+        width={40}
+        height={40}
+      />
+    </Dropdown>
   }
   
-  return <Button rounded onClick={handleLogin}>
-    <Icon iconName="person-circle" size={size}/>
+  return <Button onClick={handleLogin}>
+    <Icon iconName="discord" size={size}/>
     <span className={`ms-2 fs-${size + 3}`}>Login</span>
   </Button>
 }

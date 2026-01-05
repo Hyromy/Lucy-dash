@@ -11,8 +11,15 @@ export default function Navbar({children}: NavbarProps) {
   </nav>
 }
 
-export function NavbarGroup({children}: NavbarProps) {
-  return <div className="navbar-group d-flex align-items-center gap-2">
+type NavbarGroupProps = {
+  children?: ReactNode,
+  gap?: number,
+}
+export function NavbarGroup({
+  children,
+  gap = 2
+}: NavbarGroupProps) {
+  return <div className={`navbar-group d-flex align-items-center gap-${gap}`}>
     {children}
   </div>
 }
