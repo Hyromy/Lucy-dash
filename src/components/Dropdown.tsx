@@ -8,11 +8,13 @@ type DropdownProps = {
   children: ReactNode
   options: ReactNode[]
   align?: AlignOptions
+  disabled?: boolean
 }
 export default function Dropdown({
   children,
   options,
-  align = null
+  align = null,
+  disabled = false
 }: DropdownProps) {
   if (align && !VALID_ALIGNMENTS.includes(align)) {
     throw new Error(
@@ -24,7 +26,7 @@ export default function Dropdown({
     ? `dropdown-menu-${align}`
     : ""
 
-  return <div className="dropdown">
+  return <div className="dropdown" {...disabled ? { 'aria-disabled': 'true' } : {}}>
     <button className="btn dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
       {children}
     </button>

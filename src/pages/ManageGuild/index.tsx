@@ -101,7 +101,7 @@ function thisView(guild: any) {
         )}
         <div>
           <h2 className="mb-1">{guild.name}</h2>
-          <p className="mb-0 opacity-75">{guild.description || 'Sin descripción'}</p>
+          <p className="mb-0 opacity-75">{guild.description || 'No description available'}</p>
         </div>
       </div>
     </div>
@@ -111,7 +111,7 @@ function thisView(guild: any) {
           <div className="card-body">
             <i className="bi bi-people-fill fs-1 text-primary"></i>
             <h3 className="mt-2 mb-0">{guild.approximate_member_count || 0}</h3>
-            <small className="text-muted">Miembros</small>
+            <small className="text-muted">Members</small>
           </div>
         </div>
       </div>
@@ -120,7 +120,7 @@ function thisView(guild: any) {
           <div className="card-body">
             <i className="bi bi-circle-fill fs-1 text-success"></i>
             <h3 className="mt-2 mb-0">{guild.approximate_presence_count || 0}</h3>
-            <small className="text-muted">En Línea</small>
+            <small className="text-muted">Online</small>
           </div>
         </div>
       </div>
@@ -147,20 +147,20 @@ function thisView(guild: any) {
       <div className="col-md-6">
         <div className="card">
           <div className="card-header">
-            <h5 className="mb-0">Información General</h5>
+            <h5 className="mb-0">General Information</h5>
           </div>
           <div className="card-body">
             <dl className="row mb-0">
-              <dt className="col-sm-4">ID del Servidor:</dt>
+              <dt className="col-sm-4">Server ID:</dt>
               <dd className="col-sm-8"><code>{guild.id}</code></dd>
-              <dt className="col-sm-4">Propietario:</dt>
+              <dt className="col-sm-4">Owner:</dt>
               <dd className="col-sm-8">{guild.owner_id}</dd>
-              <dt className="col-sm-4">Región:</dt>
-              <dd className="col-sm-8">{guild.region || 'Automática'}</dd>
-              <dt className="col-sm-4">Nivel Boost:</dt>
+              <dt className="col-sm-4">Region:</dt>
+              <dd className="col-sm-8">{guild.region || 'Automatic'}</dd>
+              <dt className="col-sm-4">Boost Level:</dt>
               <dd className="col-sm-8">
                 <span className="badge bg-primary">
-                  Nivel {guild.premium_tier || 0}
+                  Level {guild.premium_tier || 0}
                 </span>
               </dd>
             </dl>
@@ -170,15 +170,15 @@ function thisView(guild: any) {
       <div className="col-md-6">
         <div className="card">
           <div className="card-header">
-            <h5 className="mb-0">Características</h5>
+            <h5 className="mb-0">Features</h5>
           </div>
           <div className="card-body">
             <div className="d-flex flex-wrap gap-2">
-              {guild.features?.map((feature: string) => (
+              {guild.features.length && guild.features.map((feature: string) => (
                 <span key={feature} className="badge bg-secondary">
                   {feature.replace(/_/g, ' ')}
                 </span>
-              )) || <span className="text-muted">Sin características especiales</span>}
+              )) || <span className="text-muted">No special features</span>}
             </div>
           </div>
         </div>
