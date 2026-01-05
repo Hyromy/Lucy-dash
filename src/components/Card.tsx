@@ -1,16 +1,13 @@
+import { type ReactNode } from "react"
+
 import { type Guild } from "../services/guildService"
 
 import style from "../assets/css/Card.module.css"
-
-export default function Card() {
-  return <div>Card Component</div>
-}
 
 type GuildCardProps = {
   guild: Guild
   onClick?: () => void
 }
-
 export function GuildCard({guild, onClick}: GuildCardProps) {
   const {
     id,

@@ -21,10 +21,35 @@ export function ListGroup({
     : ""
 
   return <ul className={`list-group ${variantClass}`}>
-    {Children.map(children, (child, index) => (
-      <li key={index} className="list-group-item">
-        {child}
-      </li>
-    ))}
+    {Children.map(children, (child, index) => {
+      const isListGroupItem = (child as any)?.type?.name == "ListGroupItem"
+
+      const content = isListGroupItem
+        ? child
+        : <li key={index} className="list-group-item">
+            {child}
+          </li>
+
+      return content
+    })}
   </ul>
+}
+
+type ListGroupItemProps = {
+  children: ReactNode
+  active?: boolean
+  pointer?: boolean
+  onclick?: () => void
+}
+export function ListGroupItem({
+  children,
+  active = false,
+  onclick
+}: ListGroupItemProps) {
+  return <li 
+    className={`list-group-item${active ? " active" : ""} list-group-item-action`}
+    onClick={onclick}
+    {...(active ? { "aria-current": "true" } : {})}>
+      {children}
+  </li>
 }
