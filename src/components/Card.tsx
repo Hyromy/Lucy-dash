@@ -1,5 +1,3 @@
-import { type ReactNode } from "react"
-
 import { type Guild } from "../services/guildService"
 
 import style from "../assets/css/Card.module.css"
