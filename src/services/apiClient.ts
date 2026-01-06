@@ -32,5 +32,11 @@ export const Api = {
     apiRequest(endpoint, { 
       method: 'POST', 
       body: data ? JSON.stringify(data) : undefined 
-    })
+    }),
+
+  patch: (endpoint: string, data?: any) => 
+    apiRequest(endpoint, { 
+      method: 'PATCH', 
+      body: data ? JSON.stringify(data) : undefined 
+    }),
 }

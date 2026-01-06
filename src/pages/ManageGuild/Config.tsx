@@ -13,9 +13,12 @@ export default function Config({ guild }: ConfigProps) {
     
   const handleLanguageChange = (language: string) => {
     setIsLoading(true)
-    // endpoint not implemented yet
-    Api.post("", {})
-      .then(data => console.log("data", data))
+    Api.patch(`api/bot/guild/${currentGuild.id}`, { lang: language })
+      .then(data => {
+        if (data.ok) {
+          setCurrentGuild({ ...currentGuild, lang: language })
+        }
+      })
       .catch(err => console.error(err))
       .finally(() => setIsLoading(false))    
   }
